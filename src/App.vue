@@ -1,71 +1,77 @@
 <script setup>
 import { ref } from 'vue';
 import CardComponent from './components/CardComponent.vue';
+import postComponent from './components/postComponent.vue';
+const users = ref([
+  {
+    name: 'Camila',
+    foto: 'https://picsum.photos/100'
+  },
+  {
+    name: 'Maria Fernanda',
+    foto: 'https://picsum.photos/500'
+  },
 
+  {
+    name: 'Señor Equis',
+   foto: 'https://picsum.photos/354'
 
-    const users = ref([
-      {
-        name: 'Darwin Gomez',
-        mail: 'darwin@gmail.com',
-      },
-      {
-        name: 'Andrey Pacheco',
-        mail: 'pacheco@gmail.com',
-      },
-    ]);
+  },
+  {
+  name: 'Juan Carlos',
+   foto: 'https://picsum.photos/223'
 
-    const borrarTarjeta = (index) => {
-      alert('¿Estás seguro de eliminar el usuario?', index);
-      users.value.splice(index, 1);
-    };
-
-    const modificarUsuario = (index, newName, newMail) => {
-      const user = users.value[index];
-      user.name = newName;
-      user.mail = newMail;
-    };
-
-    const name = ref('');
-    const mail = ref('');
-
-    const addUser = () => {
-      const newUser = {
-        name: name.value,
-        mail: mail.value,
-      };
-
- 
-
-      users.value.unshift(newUser);
-      name.value = '';
-      mail.value = '';
-    };
+  },
+]);
+const post = ref([
+  {
+    persona: 'Mariano Perez',
+    imgPost: 'https://picsum.photos/100',
+    tiempo: 'Hace 10 minutos'
+  },
+]);
 
 </script>
 
 <template>
   <div>
-    <h1 class="text-2x1">
-      HOLA MUNDO
-    </h1>
-    <input type="text"  v-model="name" placeholder="Escriba su nombre" class="border rounded" style="color: black; "><br><br>
-    <input type="text" v-model="mail" placeholder="email" class="border rounded" style="color: black;"><br>
-    <button class="bg-green-600 px-2 py-1 rounded mt-2" @click="addUser">Añadir</button>
-    <div class="space-y-2">
-      <CardComponent
-        v-for="(user, index) in users" :key="index"
-        :name="user.name"
-        :mail="user.mail"
-        :index="index"
-        @borrarTarjeta="borrarTarjeta"
-        @modificarUsuario="modificarUsuario"
-      />
+    <div class="flex justify-between">
+      <h1 class="text-2xl mr-4">Historias</h1>
+      <button class="bg-blue-300 text-black" id="todos">Todos</button>
     </div>
-
+    <div class="grid grid-flow-col justify-stretch">
+      <div v-for="(user, index) in users" :key="index">
+        <CardComponent
+          :name="user.name"
+          :index="index"
+          :foto="user.foto"
+        />
+    
+      </div>
+    </div><br>
+    <div>
+      <div v-for="(p, index) in post" :key="index">
+        <postComponent
+          :persona="p.persona"
+          :imgPost="p.imgPost"
+          :tiempo="p.tiempo"
+          :index="index"
+        />
+    
+      </div>
+    </div>
   </div>
-
 </template>
 
 <style scoped>
+#todos {
+  border-bottom: 12px;
+}
 
+.info-container {
+  margin-top: 10px;
+  text-align: center;
+}
 </style>
+
+
