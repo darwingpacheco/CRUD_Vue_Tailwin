@@ -22,18 +22,27 @@ const props = defineProps({
 
 const counter = ref(0);
 const counterNoLike = ref(0);
+const isLiked = ref(false);
+const isLikedNoLike = ref(false);  // Variable booleana para controlar si el contador ha sido incrementado
 
 const incrementCounter = () => {
-  counter.value++;
+  if (!isLiked.value) {
+    counter.value++;
+    isLiked.value = true;
+  }
 };
+
 const incrementCounterNoLike = () => {
-  counterNoLike.value++;
+  if(!isLikedNoLike.value){
+    counterNoLike.value++;
+    isLikedNoLike.value=true;
+  }
 };
 </script>
- 
+
 <template>
   <div class="image-container">
-    <div class="flex flex-row justify-start"> <!-- Agrega "justify-end" aquí -->
+    <div class="flex flex-row justify-start">
       <img src="img/man.png" alt="" class="user-icon">
       <h2 class="text-sm font-semibold px-">{{ props.persona }}</h2>
     </div>
@@ -43,7 +52,7 @@ const incrementCounterNoLike = () => {
     <div class="heart-container">
       <img src="img/corazon.png" alt="" @click="incrementCounter" class="heart-icon">
       <span>{{ counter }}</span>
-    
+
       <div class="heart-container ps-10">
         <img src="img/dont-like-symbol.png" alt="" @click="incrementCounterNoLike" class="heart-icon">
         <span>{{ counterNoLike }}</span>
@@ -51,7 +60,6 @@ const incrementCounterNoLike = () => {
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .image-container {
